@@ -642,7 +642,7 @@ char* evaluate(char *pos, dword* result) {
             while ((*pos >= 'a' && *pos <= 'z') ||
                    (*pos >= 'A' && *pos <= 'Z') ||
                    (*pos >= '0' && *pos <= '9') ||
-                    *pos == '_' || *pos == '!') {
+                    *pos == '_' || *pos == '!' || *pos == '$') {
               token[p++] = *pos++;
               }
             token[p] = 0;
