@@ -132,6 +132,9 @@ typedef union {
 LINK char** defines;
 LINK char** defineValues;
 LINK int    numDefines;
+LINK char** clDefines;
+LINK char** clDefineValues;
+LINK int    numClDefines;
 LINK char** labels;
 LINK char** labelProcs;
 LINK word*  labelValues;
@@ -174,6 +177,8 @@ LINK int    errors;
 LINK word   execAddr;
 LINK word   highest;
 LINK word   highAddress;
+LINK char **incPath;
+LINK int    numIncPath;
 LINK int    inProc;
 LINK char   lineEnding[3];
 LINK int    linesAssembled;
