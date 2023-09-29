@@ -1429,7 +1429,7 @@ void Asm(char* line) {
     while ((*line >= 'a' && *line <= 'z') ||
            (*line >= 'A' && *line <= 'Z') ||
            (*line >= '0' && *line <= '9') ||
-           *line == '_' || *line == '!') {
+           *line == '_' || *line == '!' || *line == '$') {
       label[pos++] = *line++;
       }
     label[pos] = 0;
