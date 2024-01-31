@@ -199,7 +199,7 @@ OPCODE opcodes[] = {
   { "cid",   OT_680ARG, 0x0d  },
   { "dsav",  OT_680ARG, 0x76  },
   { "scal",  OT_682ARG, 0x80  },
-  { "sret",  OT_680ARG, 0x90  },
+  { "sret",  OT_68NARG, 0x90  },
   { "end",   OT_END,    0x00  },
   { "public",OT_PUBLIC, 0x00  },
   { "extrn", OT_EXTRN,  0x00  },
