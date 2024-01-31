@@ -168,7 +168,7 @@ OPCODE opcodes[] = {
   { "xor",   OT_0ARG,   XOR   },
   { "xri",   OT_1ARG,   XRI   },
   { "org",   OT_ORG,    0     },
-  { "rldi",  OT_68NARG, 0xc0  },
+  { "rldi",  OT_682ARG, 0xc0  },
   { "rlxa",  OT_68NARG, 0x60  },
   { "rsxd",  OT_68NARG, 0xa0  },
   { "dbnz",  OT_682ARG, 0x20  },
