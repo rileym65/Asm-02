@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <time.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <io.h>
@@ -24,6 +25,10 @@
 #endif
 
 #define VERSION  "1.2"
+
+typedef unsigned char byte;
+typedef unsigned short word;
+typedef unsigned int   dword;
 
 #define IDL      0x00
 #define LDN      0x00
@@ -122,9 +127,64 @@
 #define RE       0x0e
 #define RF       0x0f
 
-typedef unsigned char byte;
-typedef unsigned short word;
-typedef unsigned int   dword;
+typedef struct {
+  char opcode[8];
+  byte typ;
+  byte byte1;
+  } OPCODE;
+
+#define OT_0ARG    0
+#define OT_1ARG    1
+#define OT_LBR     2
+#define OT_DB      3
+#define OT_DS      4
+#define OT_NARG    5
+#define OT_EQU     6
+#define OT_ORG     7
+#define OT_680ARG  8
+#define OT_681ARG  9
+#define OT_68NARG 10
+#define OT_682ARG 11
+#define OT_END    12
+#define OT_SBR    13
+#define OT_MACRO  19
+#define OT_PUBLIC 20
+#define OT_EXTRN  21
+#define OT_PROC   22
+#define OT_ENDP   23
+#define OT_VER    24
+#define OT_EVER   25
+#define OT_EEVER  26
+#define OT_DF     27
+
+#define OP_LOW  0x94
+#define OP_HIGH 0x93
+#define OP_SGN  0x92
+#define OP_ABS  0x91
+#define OP_DOT  0x80
+#define OP_MUL  0x70
+#define OP_DIV  0x71
+#define OP_MOD  0x72
+#define OP_ADD  0x60
+#define OP_SUB  0x61
+#define OP_SHR  0x50
+#define OP_SHL  0x51
+#define OP_AND  0x40
+#define OP_OR   0x41
+#define OP_XOR  0x42
+#define OP_NOT  0x43
+#define OP_EQ   0x30
+#define OP_NE   0x31
+#define OP_LT   0x32
+#define OP_GT   0x33
+#define OP_LTE  0x34
+#define OP_GTE  0x35
+#define OP_LAND 0x20
+#define OP_LOR  0x21
+#define OP_CP   0x10
+#define OP_OP   0x02
+#define OP_END  0x01
+#define OP_NUM  0x00
 
 typedef union {
   float f;
@@ -209,11 +269,47 @@ LINK int    numSourceFiles;
 LINK char   use1805;
 LINK byte   useAsm;
 LINK byte   useExtended;
+LINK char sourceLine[1024];
+LINK word lstCount;
+
 
 LINK FILE  *sourceFile[100];
 LINK int    lineNumber[100];
 LINK int    fileNumber;
 
+extern void  addDefine(char* define, char* value);
+extern void  addLabel(char* label, word value);
+extern void  Asm(char* line);
+extern char* asm_convertNumber(char* buffer, dword* value, byte* success);
+extern void  assembleFile(char* sourceFile, int argc, char** argv);
+extern void  clear();
+extern void  compileOp(char* line);
+extern void  defReplace(char* line);
+extern void  delDefine(char* define);
+extern char* evaluate(char *pos, dword* result);
+extern char* findDefine(char* define);
+extern int   findLabel(char* label);
+extern word  getHex(char* line);
+extern word  getLabel(char* label);
+extern int   isAlpha(char c);
+extern int   isExternal(int v);
+extern int   isRReg(char* line);
+extern char* lineNo();
+extern void  list(char* message);
+extern char* nextLine(char* line);
+extern void  output(byte value);
+extern int   pass(int p, char* srcFile);
+extern dword processArgs(char* args);
+extern void  processDb(char* args,char typ);
+extern void  processDf(char* args);
+extern void  processDs(word arg);
+extern void  processOption(char* option);
+extern void  processOrg(word arg);
+extern void  processRAM(char* buffer);
+extern void  processROM(char* buffer);
+extern void  setLabel(char* label, word value);
+extern char* trim(char* line);
+extern void  writeOutput();
 
 
 #endif
