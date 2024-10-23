@@ -1662,6 +1662,12 @@ void Asm(char* line) {
                errors++;
                }
              output(value & 0xff);
+             if (passNumber == 2 && usedLocal >= 0) {
+               fixups[numFixups] = address-1;
+               fixupTypes[numFixups] = 'S';
+               fixupLowOffset[numFixups] = 0;
+               numFixups++;
+               }
              break;
         case OT_NARG:
              output(opcodes[pos].byte1 | (processArgs(args) & 0xf));
@@ -1817,6 +1823,8 @@ void Asm(char* line) {
                    }
                  if (fixupTypes[i] == 'L')
                    sprintf(buffer,"v%04x\n",fixups[i]);
+                 if (fixupTypes[i] == 'S')
+                   sprintf(buffer,"$%04x\n",fixups[i]);
                  write(outFile, buffer, strlen(buffer));
                  }
                sprintf(buffer,"}\n");
@@ -2223,7 +2231,7 @@ int main(int argc, char** argv) {
   int i;
   time_t tv;
   struct tm dt;
-  printf("Asm/02 v1.1\n");
+  printf("Asm/02 v%s\n",VERSION);
   printf("by Michael H. Riley\n");
   createLst = 0;
   outMode = 'R';
